@@ -65,9 +65,14 @@
 
 - (void)dispatchEvent:(PTPusherEvent *)event
 {
-  for (PTPusherEventBinding *binding in _bindings[event.name]) {
-    [binding dispatchEvent:event];
-  }
+    @try {
+        for (PTPusherEventBinding *binding in _bindings[event.name]) {
+            [binding dispatchEvent:event];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception raised on PTPusherEventDispatcher: dispatchEvent: %@",[exception description]);
+    }
 }
 
 @end
